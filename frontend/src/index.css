@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.nav-link {
+  margin-left: 40px;
+}
+.footer-icon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.foot a {
+  text-decoration: none;
+  color: black;
+}
+.universe-img {
+  width: 50%;
+}
+.universe a,
+.universe a:visited,
+.universe a:active {
+  text-decoration: none;
+  color: #5f6368; /* Zerodha main brand color[1] */
+}
