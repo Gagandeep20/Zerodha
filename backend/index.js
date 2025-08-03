@@ -15,7 +15,11 @@ const uri = process.env.MONGO_URL;
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://zerodha-dashboard-sjhu.onrender.com",
+  })
+);
 app.use(bodyParser.json());
 
 // app.get("/addHoldings", async (req, res) => {
@@ -198,16 +202,22 @@ app.get("/allPositions", async (req, res) => {
 });
 
 app.post("/newOrder", async (req, res) => {
-  let newOrder = new OrdersModel({
-    name: req.body.name,
-    qty: req.body.qty,
-    price: req.body.price,
-    mode: req.body.mode,
-  });
+  try {
+    const { name, qty, price, mode } = req.body;
+    const newOrder = new OrdersModel({
+      name,
+      qty,
+      price,
+      mode,
+    });
 
-  newOrder.save();
+    await newOrder.save();
 
-  res.send("Order saved!");
+    res.status(201).send("Order saved!");
+  } catch (err) {
+    console.error("Error saving order:", err.message);
+    res.status(500).send("Failed to save order.");
+  }
 });
 
 app.listen(PORT, () => {
