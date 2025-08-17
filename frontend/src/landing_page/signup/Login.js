@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Signup() {
+function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleError = (err) =>
@@ -18,20 +17,21 @@ function Signup() {
 
   const handleSuccess = (msg) =>
     toast.success(msg, {
-      position: "bottom-right",
+      position: "bottom-left",
     });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password || !username) {
-      handleError("Please fill out all fields.");
+    if (!email || !password) {
+      handleError("Please fill out both fields.");
       return;
     }
+
     setIsSubmitting(true);
     try {
       const { data } = await axios.post(
-        "http://localhost:3002/signup",
-        { email, password, username },
+        "http://localhost:4000/login",
+        { email, password },
         { withCredentials: true }
       );
 
@@ -39,56 +39,34 @@ function Signup() {
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/");
+          navigate("/dashboard");
         }, 1000);
       } else {
         handleError(message);
       }
     } catch (err) {
       console.error("Error:", err);
-      handleError(err.message || "Signup failed");
+      handleError(err.response?.data?.message || "Login failed");
     } finally {
       setIsSubmitting(false);
-      setEmail("");
-      setPassword("");
-      setUsername("");
     }
   };
 
   return (
-    <div className="container">
-      <div className="text-center mt-5 p-5">
-        <h2>Open a free demat and trading account online</h2>
-        <p className="fs-4">
-          Start investing brokerage free and join a community of 1.6+ crore
-          investors and traders
-        </p>
-      </div>
-      <div className="row mt-5 mb-5">
-        <div className="col-7">
-          <img src="media/images/signup.png" alt="signup" />
+    <div className="container mt-5 mb-5 p-5">
+      <div className="row">
+        <div className="col-6">
+          <img
+            src="media/images/acop-benefits.svg"
+            alt="login"
+            className="p-5"
+            style={{ width: "100%" }}
+          />
         </div>
-        <div className="col-5  p-5">
+        <div className="col-6 mt-5">
           <form onSubmit={handleSubmit}>
-            <h3>Signup now</h3>
-            <p className="text-muted fs-5">
-              Or track your existing application
-            </p>
-            <div className="input-group mb-3">
-              <span className="input-group-text" id="basic-addon1">
-                @
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                value={username}
-                placeholder="Username"
-                aria-label="Username"
-                onChange={(e) => setUsername(e.target.value)}
-                aria-describedby="basic-addon1"
-              />
-            </div>
-            <div className="input-group mb-3  input-group-lg">
+            <h3>Login</h3>
+            <div className="input-group mb-3 mt-3 input-group-lg">
               <input
                 type="email"
                 className="form-control"
@@ -98,6 +76,7 @@ function Signup() {
                 aria-describedby="basic-addon2"
               />
             </div>
+            <br />
             <div className="input-group mb-3">
               <span className="input-group-text" id="basic-addon1">
                 <i className="fa fa-lock" aria-hidden="true"></i>
@@ -117,21 +96,9 @@ function Signup() {
               type="submit"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Signing up..." : "Sign up"}
+              {isSubmitting ? "Logging you in..." : "Login"}
             </button>
           </form>
-          <p className="mt-3">
-            By proceeding, you agree to the{" "}
-            <a href="." style={{ textDecoration: "none" }}>
-              Zerodha terms & privacy policy
-            </a>
-          </p>
-          <h6>
-            Already have an account{" "}
-            <Link to="/login" style={{ textDecoration: "none" }}>
-              Login
-            </Link>
-          </h6>
         </div>
       </div>
       <ToastContainer />
@@ -139,4 +106,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Login;

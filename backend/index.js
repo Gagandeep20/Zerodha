@@ -4,12 +4,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const cookieParser = require("cookie-parser");
+const authRoute = require("./routes/AuthRoute");
 const { HoldingsModel } = require("./model/HoldingsModel");
-
 const { PositionsModel } = require("./model/PositionsModel");
 const { OrdersModel } = require("./model/OrdersModel");
-
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 
@@ -17,11 +16,21 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://zerodha-dashboard-sjhu.onrender.com",
+    origin: [
+      "https://zerodha-dashboard-sjhu.onrender.com",
+      "http://localhost:3000",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
 app.use(bodyParser.json());
+app.use(cookieParser());
 
+app.use(express.json());
+console.log(authRoute);
+
+app.use("/", authRoute);
 // app.get("/addHoldings", async (req, res) => {
 //   let tempHoldings = [
 //     {
@@ -219,6 +228,8 @@ app.post("/newOrder", async (req, res) => {
     res.status(500).send("Failed to save order.");
   }
 });
+
+app.use(express.json());
 
 app.listen(PORT, () => {
   console.log("App started!");
