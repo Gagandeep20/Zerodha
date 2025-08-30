@@ -5,6 +5,7 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import HomePage from "./landing_page/home/HomePage";
 import Signup from "./landing_page/signup/Signup.js";
+import Dashboard from "./landing_page/signup/Dashboard.js";
 import Login from "./landing_page/signup/Login.js";
 import AboutPage from "./landing_page/about/AboutPage.js";
 import PricingPage from "./landing_page/pricing/PricingPage.js";
@@ -22,6 +23,7 @@ root.render(
       <Route path="/" element={<HomePage />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/pricing" element={<PricingPage />} />
       <Route path="/product" element={<ProductPage />} />

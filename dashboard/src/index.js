@@ -1,17 +1,31 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./index.css";
-import Home from "./components/Home";
-import "./testenv.js";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  BrowserRouter,
+} from "react-router-dom";
+import AuthGuard from "./components/AuthGuard";
+import Dashboard from "./components/Dashboard";
+import Holdings from "./components/Holdings";
+import Positions from "./components/Positions";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
+function App() {
+  return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/*" element={<Home />} />
-      </Routes>
+      <Router>
+        <AuthGuard>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/holdings" element={<Holdings />} />
+              <Route path="/positions" element={<Positions />} />
+            </Routes>
+          </div>
+        </AuthGuard>
+      </Router>
     </BrowserRouter>
-  </React.StrictMode>
-);
+  );
+}
+
+export default App;

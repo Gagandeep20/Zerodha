@@ -1,6 +1,11 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 function Universe() {
+  const navigate = useNavigate();
+
+  const goToSignup = () => {
+    navigate("/signup");
+  };
   return (
     <>
       {/* Custom CSS for image sizing to ensure consistent alignment */}
@@ -139,6 +144,7 @@ function Universe() {
         <button
           className="btn btn-primary fs-5 p-2 mt-5"
           style={{ margin: "0 auto", width: "20%" }}
+          onClick={goToSignup}
         >
           Signup Now
         </button>

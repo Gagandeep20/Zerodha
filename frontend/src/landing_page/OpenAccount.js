@@ -1,6 +1,11 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 function OpenAccount() {
+  const navigate = useNavigate();
+
+  const goToSignup = () => {
+    navigate("/signup");
+  };
   return (
     <div className="container p-5 mb-5">
       <div className="row text-center">
@@ -13,6 +18,7 @@ function OpenAccount() {
         <button
           className="btn btn-primary fs-5 p-2"
           style={{ margin: "0 auto", width: "20%" }}
+          onClick={goToSignup}
         >
           Signup Now
         </button>
